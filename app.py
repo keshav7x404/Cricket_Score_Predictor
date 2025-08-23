@@ -36,7 +36,12 @@ def index():
 
         balls_left = 120 - (overs * 6)
         wickets_left = 10 - wickets
-        current_run_rate = current_score / overs
+        
+        # Handle the ZeroDivisionError if overs is 0
+        if overs > 0:
+            current_run_rate = current_score / overs
+        else:
+            current_run_rate = 0
 
         input_df = pd.DataFrame(
             {'batting_team': [batting_team], 'bowling_team': [bowling_team], 'city': [city], 
@@ -46,8 +51,22 @@ def index():
 
         result = pipe.predict(input_df)
         prediction = int(result[0])
+        
+        # Pass all form data back to the template to pre-fill the form
+        return render_template('index.html',
+                               teams=sorted(teams),
+                               cities=sorted(cities),
+                               prediction=prediction,
+                               batting_team=batting_team,
+                               bowling_team=bowling_team,
+                               city=city,
+                               current_score=current_score,
+                               overs=overs,
+                               wickets=wickets,
+                               last_five=last_five)
 
-    return render_template('index.html', teams=sorted(teams), cities=sorted(cities), prediction=prediction)
+    # For GET requests or initial page load
+    return render_template('index.html', teams=sorted(teams), cities=sorted(cities))
 
 if __name__ == '__main__':
     app.run(debug=True)

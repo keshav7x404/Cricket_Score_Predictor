@@ -9,60 +9,203 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+        /* General Styles */
         body {
             padding-top: 50px;
-            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
             font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s, color 0.5s;
         }
+
         .container {
             max-width: 900px;
         }
+
+        .card {
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.5s, color 0.5s;
+        }
+
         h1 {
             margin-bottom: 30px;
             font-size: 2.5rem;
-            color: #333;
             position: relative;
             display: inline-block;
         }
-        h1:before {
-            content: url('https://img.icons8.com/color/48/000000/cricket.png');
-            position: absolute;
-            left: -60px;
-            top: -10px;
+        
+        /* Team images are now placed inside their own divs for better control */
+        .team-logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
+
         .team-image {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            object-fit: contain; /* Ensure images fit without distortion */
+            background-color: #fff; /* A background color to make the circular image stand out */
         }
-        .card {
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
-            background: #ffffff;
+        
+        .form-control, .form-control:focus {
+            color: inherit; /* Inherit text color from parent */
+            transition: background-color 0.5s, border-color 0.5s, color 0.5s;
         }
-        .form-control:focus {
-            border-color: #28a745;
-            box-shadow: none;
-        }
+
         .btn-primary {
-            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
             border: none;
             padding: 15px 30px;
             font-size: 1.2rem;
             border-radius: 50px;
             transition: all 0.3s ease;
         }
+
+        .alert-info {
+            transition: background-color 0.5s, color 0.5s, border-color 0.5s;
+        }
+
+        /* Light Theme */
+        body {
+            background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+        }
+
+        .card {
+            background: #ffffff;
+        }
+
+        h1, label, .alert-info {
+            color: #333;
+        }
+        
+        h1:before {
+            content: url('https://img.icons8.com/color/48/000000/cricket.png');
+            position: absolute;
+            left: -60px;
+            top: -10px;
+        }
+        
+        .form-control {
+            background-color: #fff;
+            border-color: #ced4da;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        }
+
         .btn-primary:hover {
             background: linear-gradient(to right, #00f2fe 0%, #4facfe 100%);
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border-color: #d1ecf1;
+        }
+
+        /* Dark Theme */
+        .dark-mode {
+            background: #121212;
+            color: #e0e0e0; /* Default text color for dark mode */
+        }
+
+        .dark-mode .card {
+            background: #1e1e1e;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-mode h1, .dark-mode label, .dark-mode .alert-info {
+            color: #e0e0e0;
+        }
+        
+        .dark-mode h1:before {
+            content: url('https://img.icons8.com/color/48/ffffff/cricket.png'); /* A white or lighter cricket icon for dark mode */
+        }
+
+        .dark-mode .form-control {
+            background-color: #333;
+            border-color: #555;
+            color: #e0e0e0; /* Ensure text inside form fields is visible */
+        }
+
+        .dark-mode .form-control::placeholder {
+            color: #888;
+        }
+
+        .dark-mode .btn-primary {
+            background: linear-gradient(to right, #3a506b 0%, #465a71 100%);
+        }
+
+        .dark-mode .btn-primary:hover {
+            background: linear-gradient(to right, #465a71 0%, #3a506b 100%);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-mode .alert-info {
+            background-color: #1c2e36;
+            color: #9fced8;
+            border-color: #1c2e36;
+        }
+
+        /* Theme switch styles */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+        .theme-switch input {
+            display: none;
+        }
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
         }
     </style>
     <script>
         function updateTeamImage(team, elementId) {
             const imgElement = document.getElementById(elementId);
             if (team) {
+                // Construct the path to the static image
                 imgElement.src = `/static/${team.toLowerCase().replace(' ', '_')}.png`;
                 imgElement.alt = team;
             } else {
@@ -71,7 +214,33 @@
             }
         }
 
-        $(document).ready(function() {
+        // Theme toggle logic
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const currentTheme = localStorage.getItem('theme');
+
+            // Apply saved theme on page load
+            if (currentTheme) {
+                document.body.classList.add(currentTheme);
+                if (currentTheme === 'dark-mode') {
+                    themeToggle.checked = true;
+                }
+            } else {
+                // Default to light mode if no preference is saved
+                document.body.classList.remove('dark-mode');
+            }
+
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    document.body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light-mode');
+                }
+            });
+
+            // Initial image update
             updateTeamImage($('#batting_team').val(), 'batting_team_image');
             updateTeamImage($('#bowling_team').val(), 'bowling_team_image');
 
@@ -85,13 +254,18 @@
     </script>
 </head>
 <body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="theme-toggle">
+            <input type="checkbox" id="theme-toggle" />
+            <div class="slider round"></div>
+        </label>
+    </div>
     <div class="container text-center">
         <div class="card">
             <div class="row">
-                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <div class="col-md-2 d-flex align-items-center justify-content-center team-logo-container">
                     <img id="batting_team_image" class="team-image" src="" alt="Batting Team">
                 </div>
-
                 <div class="col-md-8">
                     <h1>Cricket Score Predictor</h1>
                     <form method="POST">
@@ -115,7 +289,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="city">Select city</label>
@@ -130,7 +303,6 @@
                                 <input type="number" class="form-control" name="current_score" id="current_score">
                             </div>
                         </div>
-
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="overs">Overs Done (works for over > 5)</label>
@@ -145,18 +317,15 @@
                                 <input type="number" class="form-control" name="last_five" id="last_five">
                             </div>
                         </div>
-
                         <button type="submit" class="btn btn-primary btn-block">Predict Score</button>
                     </form>
-
                     {% if prediction %}
                     <div class="alert alert-info mt-4 text-center" role="alert">
                         <h2>Predicted Score - {{ prediction }}</h2>
                     </div>
                     {% endif %}
                 </div>
-
-                <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <div class="col-md-2 d-flex align-items-center justify-content-center team-logo-container">
                     <img id="bowling_team_image" class="team-image" src="" alt="Bowling Team">
                 </div>
             </div>
