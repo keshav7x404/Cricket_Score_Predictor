@@ -71,17 +71,12 @@ python app.py
 
 ---
 
-## License
 
-Distributed under the **MIT License**.  
-See the [LICENSE](LICENSE) file for more information.  
-(You should create a LICENSE file if you haven't already.)
+```
 
----
 
-## Contact
 
-**Keshav**  
 Project Link: [Cricket Score Predictor](https://github.com/keshav7x404/Cricket_Score_Predictor)
+
 
 
